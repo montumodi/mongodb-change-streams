@@ -1,0 +1,28 @@
+{
+  "name": "mongodb-change-streams",
+  "version": "1.0.0",
+  "description": "MongoDb Change Streams example",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/montumodi/mongodb-change-streams.git"
+  },
+  "keywords": [
+    "mongodb",
+    "change",
+    "streams",
+    "mongo"
+  ],
+  "author": "Ashish Modi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/montumodi/mongodb-change-streams/issues"
+  },
+  "homepage": "https://github.com/montumodi/mongodb-change-streams#readme",
+  "dependencies": {
+    "mongodb": "^3.5.2"
+  }
+}
