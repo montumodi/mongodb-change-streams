@@ -1,9 +1,9 @@
 const {getCollection} = require("./mongo-client");
-const {getResumetoken, saveResumeTaken} = require("./token-provider");
+const {getResumetoken} = require("./token-provider");
 
-async function start() {
+async function getUpsertChangeStream() {
   console.log("@@@@@@@@@@@@@@@@@@@@");
-  const resumeToken = await getResumetoken("SOME_TOKEN_ID");
+  const resumeToken = await getResumetoken("SOME_UPSERT_TOKEN_ID");
   console.log("resumeToken", resumeToken);
   const changeStream = (await getCollection("users")).watch([
     {
@@ -18,21 +18,35 @@ async function start() {
         "documentKey": false
       }
     }
+  ], {"resumeAfter": resumeToken, "fullDocument": "updateLookup"});
+
+  return changeStream;
+}
+
+async function getDeleteChangeStream() {
+  console.log("@@@@@@@@@@@@@@@@@@@@");
+  const resumeToken = await getResumetoken("SOME_DELETE_TOKEN_ID");
+  console.log("resumeToken", resumeToken);
+  const changeStream = (await getCollection("users")).watch([
+    {
+      "$match": {
+        "operationType": {
+          "$in": ["delete"]
+        }
+      }
+    },
+    {
+      "$project": {
+        "documentKey": true
+      }
+    }
   ], {"resumeAfter": resumeToken});
 
-  changeStream.on("change", async change => {
-    console.log("@@@@@@@@@@@@@@@@@@@@");
-    console.log(JSON.stringify(change, null, 2));
-    console.log("@@@@@@@@@@@@@@@@@@@@");
-    await saveResumeTaken(change._id, "SOME_TOKEN_ID");
-  });
-
-  changeStream.on("error", error => {
-    console.error(error);
-  });
+  return changeStream;
 }
 
 module.exports = {
-  start
+  getUpsertChangeStream,
+  getDeleteChangeStream
 };
 

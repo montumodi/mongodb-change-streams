@@ -8,7 +8,7 @@ async function getResumetoken(id) {
 }
 
 async function saveResumeTaken(resumeToken, id) {
-  console.log("Saving resume token", {resumeToken, id});
+  console.log("Saving resume token");
   const tokensCollection = await getCollection("tokens");
   return tokensCollection.updateOne(
     {"_id": id},

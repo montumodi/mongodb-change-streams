@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/montumodi/mongodb-change-streams#readme",
   "dependencies": {
+    "@elastic/elasticsearch": "^6.8.4",
     "mongodb": "^3.5.2"
   }
 }
