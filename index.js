@@ -1,8 +1,8 @@
-const {getChangeStream} = require("./change-identifier");
+const {getUpsertChangeStream} = require("./change-identifier");
 const {saveResumeTaken} = require("./token-provider");
 
 (async () => {
-  const changeStream = await getChangeStream();
+  const changeStream = await getUpsertChangeStream();
   changeStream.on("change", async change => {
     console.log("@@@@@@@@@@@@@@@@@@@@");
     console.log(JSON.stringify(change, null, 2));
